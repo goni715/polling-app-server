@@ -1,3 +1,8 @@
+import app from "./app";
 
-const address:string = "Saidpur, Nilphamari"
-console.log(address);
+const port = 5000;
+
+
+app.listen(port, ()=> {
+    console.log(`Server running at @${port}`);
+})
