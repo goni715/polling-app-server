@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon dist/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "deva": "ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "dev": "nodemon src/index.ts",
     "build": "tsc --w"
   },
   "keywords": [],
