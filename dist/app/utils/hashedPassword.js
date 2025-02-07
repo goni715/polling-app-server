@@ -12,16 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const config_1 = __importDefault(require("../config"));
-const dbConnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield mongoose_1.default.connect(config_1.default.database_url);
-        console.log('Database Connection success');
-    }
-    catch (err) {
-        console.log('❤Database connection failled❤');
-        console.log(err);
-    }
+const hashedPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
+    const salt = yield bcryptjs_1.default.genSalt(Number(config_1.default.bcrypt_salt_rounds));
+    return yield bcryptjs_1.default.hash(password, salt); //hashedPassword
 });
-exports.default = dbConnect;
+exports.default = hashedPassword;

@@ -1,10 +1,10 @@
-import express, { Express, Request, Response } from "express";
+import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 
-const app: Express = express();
+const app: Application = express();
 
 
 //middleware implementation
@@ -21,6 +21,6 @@ app.use(bodyParser.json());
 
 app.get("/", (req: Request, res: Response) => {
     res.send("This is Express Pollig Application Server");
-  });
+});
 
 export default app;
