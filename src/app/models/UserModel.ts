@@ -2,54 +2,62 @@ import { model, Schema } from "mongoose";
 import { IUser } from "../interfaces/user.interface";
 import hashedPassword from "../utils/hashedPassword";
 
-
-const UserSchema = new Schema<IUser>({
+const UserSchema = new Schema<IUser>(
+  {
     fullName: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     username: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: function (v) {
+          // Regex to validate username
+          // This example allows alphanumeric characters, underscores, and hyphens
+          // Username must be between 3 and 20 characters long
+          return /^[a-zA-Z0-9_-]{3,20}$/.test(v);
+        },
+        message: `Invalid username, Only alphameric characters, underscores and hypens are allowed. No space are permitted. 20 characters long`,
+      },
     },
     password: {
-        type: String,
-        required: true,
-        select:0
+      type: String,
+      required: true,
+      select: 0,
     },
     profileImage: {
-        type: String,
-        default: null
+      type: String,
+      default: null,
     },
     bookMarkPolls: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Poll"
-        }
-    ]
-}, {
-    timestamps: true
-});
-
-
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Poll",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 //Hash Password before saving
-UserSchema.pre("save", async function(next) {
-    const user = this; //this means user
-    
-    // Only hash the password if it has been modified (or is new)
-    if (!user.isModified("password")) return next();
+UserSchema.pre("save", async function (next) {
+  const user = this; //this means user
 
-    user.password= await hashedPassword(user.password);
-    next()
-})
+  // Only hash the password if it has been modified (or is new)
+  if (!user.isModified("password")) return next();
 
+  user.password = await hashedPassword(user.password);
+  next();
+});
 
-const UserModel = model<IUser>('users', UserSchema);
+const UserModel = model<IUser>("users", UserSchema);
 export default UserModel;
