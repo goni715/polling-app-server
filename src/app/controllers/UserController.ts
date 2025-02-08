@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import UserCreateService from "../services/user/UserCreateService";
 
-export const RegisterUser: RequestHandler = async (req, res) => {
+const registerUser: RequestHandler = async (req, res) => {
     try{
 
         const result = await UserCreateService(res, req.body);
@@ -18,4 +18,10 @@ export const RegisterUser: RequestHandler = async (req, res) => {
             message: err.message
         })
     }
+}
+
+
+
+export{
+    registerUser
 }
