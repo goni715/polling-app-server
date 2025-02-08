@@ -1,40 +1,29 @@
 import { NextFunction, Request, Response } from "express";
+import verifyToken from "../utils/verifyToken";
+import { Secret } from "jsonwebtoken";
+import config from "../config";
 
 const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
-<<<<<<< HEAD
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       message: "You are not authorized",
+      error: {
+        message: 'Token must be provided'
+      }
     });
   }
-=======
-    const token = req.headers.authorization?.split(" ")[1];
-    if(!token){
-      return res.status(401).json({
-          success: false,
-          message: "You are not authorized",
-          error: {
-              message: "token must be provided"
-          }
-      })
-    }
->>>>>>> c32bd50ebe0382f468239a0b22a42f23284e455f
+
+   //token-verify
+   const decoded = verifyToken(
+    token,
+    config.jwt_access_secret as Secret
+  );
+
 
   try {
   } catch (err) {}
 };
 
-<<<<<<< HEAD
-=======
-    }
-    catch(err){
-
-    }
-}
-
-
-
->>>>>>> c32bd50ebe0382f468239a0b22a42f23284e455f
 export default AuthMiddleware;
