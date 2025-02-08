@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import AuthRoutes from './app/routes/AuthRoutes';
 
 const app: Express = express();
 
@@ -22,5 +23,16 @@ app.use(bodyParser.json());
 app.get("/", (req: Request, res: Response) => {
     res.send("This is Express Pollig Application Server");
 });
+
+
+//application routes
+app.use('/api/v1/auth', AuthRoutes);
+
+app.use('*', (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'Route is not found'
+    })
+})
 
 export default app;

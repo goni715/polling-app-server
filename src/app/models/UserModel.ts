@@ -6,11 +6,20 @@ const UserSchema = new Schema<IUser>(
   {
     fullName: {
       type: String,
-      required: true,
+      required: [true, "Full name is required"],
+      trim: true,
+      validate: {
+        validator: function (value) {
+          return /^([A-Z][a-zA-Z'.\-]*\s?)+$/.test(value);
+        },
+        message:
+          'Full name must have each word capitalized and can only contain letters, spaces, apostrophes, hyphens, and dots.',
+      },
     },
     email: {
       type: String,
       required: true,
+      trim:true,
       unique: true,
     },
     username: {
