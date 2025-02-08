@@ -1,10 +1,10 @@
-import express, { Application, Request, Response } from "express";
+import express, {Express, Application, Request, Response } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 
-const app: Application = express();
+const app: Express = express();
 
 
 //middleware implementation
