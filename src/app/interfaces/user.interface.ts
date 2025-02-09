@@ -8,3 +8,8 @@ export interface IUser {
     profileImage?: string | null;
     bookMarkPolls: string[]
 }
+
+export type TLoginUser = {
+    emailUsername: string;
+    password: string;
+}
