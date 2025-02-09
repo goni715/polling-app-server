@@ -1,4 +1,6 @@
-const UserLoginService = async (res, payload) => {
+import { TLoginUser } from "../../interfaces/user.interface";
+import { Response } from 'express';
+const UserLoginService = async (res: Response, payload: TLoginUser) => {
    
 }
 
