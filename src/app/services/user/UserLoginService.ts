@@ -2,6 +2,7 @@ import { TLoginUser } from "../../interfaces/user.interface";
 import { Response } from 'express';
 import { isEmail } from 'validator';
 import UserModel from '../../models/UserModel';
+import checkPassword from '../../utils/checkPassword';
 
 const UserLoginService = async (res: Response, payload: TLoginUser) => {
    const { emailUsername, password } = payload;
@@ -28,6 +29,14 @@ const UserLoginService = async (res: Response, payload: TLoginUser) => {
          })
       }  
    }
+
+   //check password
+  const isPasswordMatch: boolean = await checkPassword(password,
+    user?.password
+  ); //return true or false
+  if (!isPasswordMatch) {
+    throw new Error("Wrong Password!");
+  }
 }
 
 export default UserLoginService;
