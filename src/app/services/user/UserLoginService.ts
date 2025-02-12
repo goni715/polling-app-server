@@ -3,6 +3,8 @@ import { Response } from 'express';
 import { isEmail } from 'validator';
 import UserModel from '../../models/UserModel';
 import checkPassword from '../../utils/checkPassword';
+import createToken from '../../utils/createToken';
+
 
 const UserLoginService = async (res: Response, payload: TLoginUser) => {
    const { emailUsername, password } = payload;
@@ -35,8 +37,28 @@ const UserLoginService = async (res: Response, payload: TLoginUser) => {
     user?.password
   ); //return true or false
   if (!isPasswordMatch) {
-    throw new Error("Wrong Password!");
+    return res.status(400).json({
+       success: false,
+       message: "Wrong Password"
+    })
   }
+
+ //token-payload
+  const tokenPayload = {
+    id: user.id,
+    email: user.email
+  };
+
+   const accessToken = createToken(
+    tokenPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string
+  );
+
+  return {
+    accessToken
+  };
+   
 }
 
 export default UserLoginService;
