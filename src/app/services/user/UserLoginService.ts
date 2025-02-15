@@ -3,7 +3,8 @@ import { Response } from 'express';
 import { isEmail } from 'validator';
 import UserModel from '../../models/UserModel';
 import checkPassword from '../../utils/checkPassword';
-import createToken from '../../utils/createToken';
+import createToken from "../../utils/createToken";
+import config from "../../config";
 
 
 const UserLoginService = async (res: Response, payload: TLoginUser) => {
