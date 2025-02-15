@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Query, Schema } from "mongoose";
 import { IUser } from "../interfaces/user.interface";
 import hashedPassword from "../utils/hashedPassword";
 
@@ -39,7 +39,6 @@ const UserSchema = new Schema<IUser>(
     password: {
       type: String,
       required: true,
-      select: 0,
     },
     profileImage: {
       type: String,
@@ -65,6 +64,15 @@ UserSchema.pre("save", async function (next) {
   if (!user.isModified("password")) return next();
 
   user.password = await hashedPassword(user.password);
+  next();
+});
+
+
+
+// Pre-find hook to exclude the password field
+UserSchema.pre(/^find/, function (this: Query<any, any>,next) {
+  // Exclude the password field from the query results
+  this.select('-password');
   next();
 });
 
