@@ -4,7 +4,7 @@ import { Secret } from "jsonwebtoken";
 import config from "../config";
 import UserModel from "../models/UserModel";
 
-const AuthMiddleware = async (req: Request & {user?:any}, res: Response, next: NextFunction) => {
+const AuthMiddleware = async (req: Request & {user?:any}, res: Response, next: NextFunction): Promise<any> => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     return res.status(401).json({

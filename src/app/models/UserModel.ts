@@ -69,12 +69,5 @@ UserSchema.pre("save", async function (next) {
 
 
 
-// Pre-find hook to exclude the password field
-UserSchema.pre(/^find/, function (this: Query<any, any>,next) {
-  // Exclude the password field from the query results
-  this.select('-password');
-  next();
-});
-
 const UserModel = model<IUser>("users", UserSchema);
 export default UserModel;

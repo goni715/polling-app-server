@@ -34,6 +34,7 @@ const UserLoginService = async (res: Response, payload: TLoginUser) => {
       }
     }
 
+     console.log(user);
 
     //check password
     const isPasswordMatch: boolean = await checkPassword(
