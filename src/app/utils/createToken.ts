@@ -1,4 +1,4 @@
-import jwt, { Secret } from 'jsonwebtoken';
+import jwt, { Secret, SignOptions } from 'jsonwebtoken';
 
 
 type TPayload = {
@@ -6,14 +6,16 @@ type TPayload = {
     email: string;
 }
 
-const createToken = (payload:any, secretKey:Secret, expiresIn:string) => {
-    const token = jwt.sign(payload, secretKey, {
-       algorithm: "HS256",
-       expiresIn
-     });
- 
-     return token;
- }
- 
+export type TExpiresIn = number | `${number}${'s' | 'm' | 'h' | 'd'}`
+
+const createToken = (payload: TPayload, secretKey: Secret, expiresIn: TExpiresIn) => {
+    const options: SignOptions = {
+        algorithm: "HS256",
+        expiresIn, // This can be a number (e.g., 3600) or a string (e.g., "1h")
+    };
+
+    const token = jwt.sign(payload, secretKey, options);
+    return token;
+};
 
  export default createToken;

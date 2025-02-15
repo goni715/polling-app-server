@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { isEmail } from 'validator';
 import UserModel from '../../models/UserModel';
 import checkPassword from '../../utils/checkPassword';
-import createToken from "../../utils/createToken";
+import createToken, { TExpiresIn } from "../../utils/createToken";
 import config from "../../config";
 
 
@@ -53,7 +53,7 @@ const UserLoginService = async (res: Response, payload: TLoginUser) => {
    const accessToken = createToken(
     tokenPayload,
     config.jwt_access_secret as string,
-    config.jwt_access_expires_in as string
+    config.jwt_access_expires_in as TExpiresIn
   );
 
   return {
