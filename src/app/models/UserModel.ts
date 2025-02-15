@@ -13,13 +13,13 @@ const UserSchema = new Schema<IUser>(
           return /^([A-Z][a-zA-Z'.\-]*\s?)+$/.test(value);
         },
         message:
-          'Full name must have each word capitalized and can only contain letters, spaces, apostrophes, hyphens, and dots.',
+          "Full name must have each word capitalized and can only contain letters, spaces, apostrophes, hyphens, and dots.",
       },
     },
     email: {
       type: String,
       required: true,
-      trim:true,
+      trim: true,
       unique: true,
     },
     username: {
